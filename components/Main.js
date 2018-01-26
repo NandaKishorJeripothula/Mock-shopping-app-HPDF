@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Text, Icon, Form, Item, Input, Button, Container} from 'native-base';
-import {Store} from './Store';
+import Store from './Store';
+
 
 
 class Main extends React.Component {
@@ -13,7 +14,7 @@ class Main extends React.Component {
                     <Item rounded bordered style={styles.searchbar}>
                         <Input placeholder="Search..."/>
                     </Item>
-                    <Button light style={styles.filterButton}>
+                    <Button onPress={() => this.props.navigation.navigate('Filters')} light style={styles.filterButton}>
                         <Icon name='settings'/>
                     </Button>
                 </Form>

@@ -3,6 +3,8 @@ import {StatusBar, Platform, View, StyleSheet, TouchableOpacity} from 'react-nat
 import {Text, Icon} from 'native-base';
 import {StackNavigator, DrawerNavigator} from 'react-navigation';
 import Main from './Main';
+import Login from './Login';
+import Filters from './Filters';
 
 const DrawerButton = (props) => {
 	return (
@@ -36,13 +38,23 @@ const Stacknavigation=StackNavigator(
         headerLeft:<DrawerButton navigation={navigation}/>,
         headerRight:<CartButton/>
       })
+    },
+    Filters:{
+      screen:Filters,
+      navigationOptions:({navigation}) => ({
+        title:'Filter Search',
+        headerStyle:{
+          backgroundColor:'rgb(0,123,181)',
+        }
+      })
     }
   }
 );
 
 const Drawernavigation=DrawerNavigator(
   {
-    Home:{screen:Stacknavigation}
+    Home:{screen:Stacknavigation},
+    Login:{screen:Login}
   },
   {
     drawerOpenRoute: 'DrawerOpen',
