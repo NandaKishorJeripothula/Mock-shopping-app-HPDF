@@ -5,6 +5,8 @@ import {StackNavigator, DrawerNavigator} from 'react-navigation';
 import Main from './Main';
 import Login from './Login';
 import Filters from './Filters';
+import Checkout from './Checkout';
+import AddProduct from './AddProduct';
 
 const DrawerButton = (props) => {
 	return (
@@ -54,7 +56,9 @@ const Stacknavigation=StackNavigator(
 const Drawernavigation=DrawerNavigator(
   {
     Home:{screen:Stacknavigation},
-    Login:{screen:Login}
+    Login:{screen:Login},
+    Checkout:{screen:Checkout},
+    AddProduct:{screen:AddProduct}
   },
   {
     drawerOpenRoute: 'DrawerOpen',

@@ -24,11 +24,11 @@ class Filters extends React.Component {
                 <Form style={{flexDirection:'row', justifyContent:'center'}}>
                     <Item bordered floatingLabel style={styles.searchbar}>
                         <Label>Min Price</Label>
-                        <Input/>
+                        <Input keyboardType='numeric'/>
                     </Item>
                     <Item bordered floatingLabel style={[styles.searchbar,{marginLeft:0}]}>
                         <Label>Max Price</Label>
-                        <Input/>
+                        <Input keyboardType='numeric'/>
                     </Item>
                 </Form>
                 <Text style={styles.label}>Select brands:</Text>
