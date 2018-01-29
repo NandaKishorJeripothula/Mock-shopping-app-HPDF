@@ -1,15 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
 import {Text, Icon, Form, Item, Input, Button, Container} from 'native-base';
 import Store from './Store';
+import Banner from './Banner';
+import ComContainer from './ComContainer';
 
 
 
 class Main extends React.Component {
     render() {
         return(
-            <Container>
+            <ScrollView>
                 <Form style={{flexDirection:'row'}}>
                     <Item rounded bordered style={styles.searchbar}>
                         <Input placeholder="Search..."/>
@@ -18,7 +20,9 @@ class Main extends React.Component {
                         <Icon name='settings'/>
                     </Button>
                 </Form>
-            </Container>
+                <Banner/>
+                <ComContainer/>
+            </ScrollView>
         );
     }
 }
