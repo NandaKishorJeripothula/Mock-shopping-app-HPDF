@@ -7,6 +7,8 @@ import Login from './Login';
 import Filters from './Filters';
 import Checkout from './Checkout';
 import AddProduct from './AddProduct';
+import Productpage from './Productpage';
+import Cart from './Cart';
 
 const DrawerButton = (props) => {
 	return (
@@ -18,10 +20,10 @@ const DrawerButton = (props) => {
   );
 };
 
-const CartButton = () => {
+const CartButton = (props) => {
 	return (
     <View style={{paddingRight:20}}>
-      <TouchableOpacity onPress={() => {/*Open Cart*/}}>
+      <TouchableOpacity onPress={() => {props.navigation.navigate('Cart')}}>
         <Icon name='cart'/>
       </TouchableOpacity>
     </View>
@@ -38,13 +40,32 @@ const Stacknavigation=StackNavigator(
           backgroundColor:'rgb(0,123,181)',
         },
         headerLeft:<DrawerButton navigation={navigation}/>,
-        headerRight:<CartButton/>
+        headerRight:<CartButton navigation={navigation}/>
       })
     },
     Filters:{
       screen:Filters,
       navigationOptions:({navigation}) => ({
         title:'Filter Search',
+        headerStyle:{
+          backgroundColor:'rgb(0,123,181)',
+        }
+      })
+    },
+    Productpage:{
+      screen:Productpage,
+      navigationOptions:({navigation}) => ({
+        title:'Elikart',
+        headerStyle:{
+          backgroundColor:'rgb(0,123,181)',
+        },
+        headerRight:<CartButton navigation={navigation}/>
+      })
+    },
+    Cart:{
+      screen:Cart,
+      navigationOptions:({navigation}) => ({
+        title:'Your Cart',
         headerStyle:{
           backgroundColor:'rgb(0,123,181)',
         }

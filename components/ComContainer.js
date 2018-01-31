@@ -10,31 +10,31 @@ export default class ComContainer extends React.Component {
          <View style={styles.con2}>
             <ConImg 
             imageSource={require('../image/img3.jpg')}
-            header = 'Shoes'
+            header = 'SHOES'
             />
          </View>
          <View style={styles.con1}>
              <ConImg 
              imageSource={require('../image/img4.jpg')}
-             header = 'jeans'
+             header = 'JEANS'
              />
          </View>
          <View style={styles.conBanner}>
          <ConImg 
          imageSource={require('../image/img2.jpg')}
-         header = 'Watch'
+         header = 'WATCH'
          />
          </View>
          <View style={styles.con1}>
             <ConImg 
             imageSource={require('../image/img5.jpg')}
-            header = 'Sports Shoes'
+            header = 'SPORTS SHOES'
             />
          </View>
          <View style={styles.con2}>
              <ConImg 
              imageSource={require('../image/img4.jpg')}
-             header = 'others'/>
+             header = 'OTHERS'/>
          </View>
 
 
