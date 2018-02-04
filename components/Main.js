@@ -3,12 +3,51 @@ import {connect} from 'react-redux';
 import {StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
 import {Text, Icon, Form, Item, Input, Button, Container} from 'native-base';
 import Store from './Store';
-import Banner from './Banner';
 import ConImg from './ConImg';
 
 
 
 class Main extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state={
+            products:[<View style={{height:0,width:0}}/>]
+        };
+    }
+
+    componentWillMount(){
+        fetch('https://app.banner20.hasura-app.io/').then((res) => {
+            return res.text();
+        }).then((data) => {
+            data=JSON.parse(data)[1];
+            for(let i=0; i<=6; i+=2){
+                console.log(data[i]);
+                this.setState({
+                    products:this.state.products.concat([
+                        <View style={styles.con}>
+                            <TouchableOpacity onPress={() => {this.props.navigation.navigate('Productpage',{product_id:data[i].id})}}>
+                                <ConImg 
+                                imageSource={{uri:data[i].first_image_url}}
+                                header = {data[i].name}
+                                />
+                            </TouchableOpacity>
+                        </View>,
+                        <View style={styles.con}>
+                            <TouchableOpacity onPress={() => {this.props.navigation.navigate('Productpage',{product_id:data[i+1].id})}}>
+                                <ConImg 
+                                imageSource={{uri:data[i+1].first_image_url}}
+                                header = {data[i+1].name}
+                                />
+                            </TouchableOpacity>
+                        </View>,
+                        <View style={styles.conBanner}/>
+                    ])
+                });
+            }
+        });
+    }
+
     render() {
         return(
             <ScrollView>
@@ -20,39 +59,8 @@ class Main extends React.Component {
                         <Icon name='settings'/>
                     </Button>
                 </Form>
-                <Banner/>
                 <View style={styles.comContainer}>
-                    <TouchableOpacity onPress={() => {this.props.navigation.navigate('Productpage')}}>
-                        <View style={styles.con2}>
-                            <ConImg 
-                            imageSource={require('../image/img3.jpg')}
-                            header = 'SHOES'
-                            />
-                        </View>
-                    </TouchableOpacity>
-                    <View style={styles.con1}>
-                        <ConImg 
-                        imageSource={require('../image/img4.jpg')}
-                        header = 'JEANS'
-                        />
-                    </View>
-                    <View style={styles.conBanner}>
-                    <ConImg 
-                    imageSource={require('../image/img2.jpg')}
-                    header = 'WATCH'
-                    />
-                    </View>
-                    <View style={styles.con1}>
-                        <ConImg 
-                        imageSource={require('../image/img5.jpg')}
-                        header = 'SPORTS SHOES'
-                        />
-                    </View>
-                    <View style={styles.con2}>
-                        <ConImg 
-                        imageSource={require('../image/img4.jpg')}
-                        header = 'OTHERS'/>
-                    </View>
+                    {this.state.products}
                 </View>
             </ScrollView>
         );
@@ -74,22 +82,17 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         flexWrap:'wrap',
-        padding:5,
+        padding:5
     },
-    con1:{
+    con:{
      flex: 1,
-     padding: 5,
-
-    },
-    con2:{
-        flex: 2,
-        padding: 5,
+     padding: 5
     },
     conBanner:{
         width:'100%',
         alignItems:'center',
         justifyContent :'center',
-        padding:5,
+        padding:5
     }
 });
 

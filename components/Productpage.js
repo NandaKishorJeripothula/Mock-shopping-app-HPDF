@@ -1,14 +1,39 @@
 import React from 'react';
 import {View, Image, ScrollView, TextInput, StyleSheet } from 'react-native';
-import {Text, Item,Label,Input, Button}  from 'native-base';
+import {H1, H2, Text, Item,Label,Input, Button}  from 'native-base';
  
 export default class Productpage extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            image:'',
+            name:'Loading...',
+            desc:'',
+            price:''
+        };
+    }
+
+    componentWillMount(){
+        fetch('https://app.banner20.hasura-app.io/product?product_id='+this.props.navigation.state.params.product_id).then((res) => {
+            return res.text();
+        }).then((data) => {
+            data=JSON.parse(data)[0];
+            this.setState({
+                image:data.product_image,
+                name:data.product_name,
+                desc:data.product_description,
+                price:data.price.toString()
+            });
+        });
+    }
+
     render() {
         return(
             <ScrollView contentContainerStyle={styles.main}>
 
-                <Image source={require('../image/demo.png')} style={styles.image}/> 
-                <Text style={styles.heading}>Caprese Grey Sling Bag with Metallic Studs</Text>
+                <Image style={styles.image} source={{uri:this.state.image}}/> 
+                <H1>{this.state.name}</H1>
+                <H2 style={{color:'rgba(0,0,0,0.7)'}}>{this.state.price}₹</H2>
                 
                 <View style={styles.view}>
                     <Button style={{backgroundColor:'#1A237E'}} onPress={() => {}}>
@@ -23,9 +48,7 @@ export default class Productpage extends React.Component{
                     Product Details
                 </Text>
                 <Text  style={styles.text2}>
-                    Grey sling bag with metallic studs, has a zip closure
-                    1 main compartment, 1 external and 5 inner pockets
-                    Non-Detachable Sling Strap
+                    {this.state.desc}
                 </Text>
 
             </ScrollView>
@@ -40,21 +63,13 @@ export default class Productpage extends React.Component{
    padding:10   ,
    justifyContent: 'space-between'
   },
-  main:
-  {
-      height:600,
-      width:300,
-      flex:0,
-      flexDirection: 'column',
-      marginHorizontal:20,
+  image:{
+      width:'90%',
+      height:300,
+      resizeMode:'contain'
   },
-  image:
-  {
-      height:250,
-      width:250
-      ,alignItems:'center',
-      justifyContent:'center',
-      marginHorizontal:10,
+  main:{
+      padding:10
   },
   input:
   {
