@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, View, TouchableOpacity, ScrollView, ToastAndroid} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, ScrollView, ToastAndroid, AsyncStorage} from 'react-native';
 import {Text, Icon, Form, Item, Input, Button, Container} from 'native-base';
 import Store from './Store';
 import ConImg from './ConImg';
@@ -46,6 +46,13 @@ class Main extends React.Component {
                     ])
                 });
             }
+        });
+    }
+
+    componentDidMount(){
+        AsyncStorage.getItem('HPDF_AUTH_TOKEN',(error,data) => {
+            if(data!=null && data!='')
+                this.props.update('LOGIN',{isLoggedIn:true, auth_token:data});
         });
     }
 
