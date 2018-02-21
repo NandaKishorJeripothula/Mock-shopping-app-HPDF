@@ -14,25 +14,31 @@ class AddProduct extends React.Component {
             product_name:'',
             price:'',
             description:'',
+            category:'',
             imageuri:'http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/128/Add-icon.png'
         };
     }
 
     submitProduct(){
-        fetch('https://app.banner20.hasura-app.io/add_product',{
+        fetch('https://app.banner20.hasura-app.io/add_product',
+        {
             method:'post',
             headers: {
                 "Accept": "application/json, text/plain, */*",
                 "Content-Type": "application/json"
             },
-            body:{
-                "product_name":this.state.product_name,
-                "price":parseInt(this.state.price),
-                "description":this.state.description,
-                "filename":this.state.imageuri                
-            }
+            body:JSON.stringify({
+                "data":{
+                    "product_name":this.state.product_name,
+                    "price":this.state.price,
+                    "description":this.state.description,
+                    "category":this.state.category,
+                    "filename":this.state.imageuri 
+                }               
+            })
         }).then((res) => {
-            return res.json();
+            console.log(res);
+            return res.text();
         }).then((data) => {
             console.log(data);
         });
@@ -78,6 +84,11 @@ class AddProduct extends React.Component {
                     <ListItem style={{borderBottomColor:'rgba(0,0,0,0.0)'}}>
                         <Item regular>
                             <Input keyboardType='numeric' placeholder='Enter Price' onChangeText={(value)=>this.setState({price:value})} value={this.state.price}/>
+                        </Item>
+                    </ListItem>
+                    <ListItem style={{borderBottomColor:'rgba(0,0,0,0.0)'}}>
+                        <Item regular>
+                            <Input placeholder='Enter Product Category' onChangeText={(value)=>this.setState({category:value})} value={this.state.category}/>
                         </Item>
                     </ListItem>
                 </List>

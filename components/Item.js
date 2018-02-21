@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList, Image } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const image1 = require('./orange.jpg');
@@ -48,7 +49,7 @@ class Item extends Component {
 
     return (
     <View style={(index + 1 === data.length) ? lastItemStyle : containerStyle}>
-      <Image source={item.image} style={imageStyle} />
+      <Image source={{uri:item.image}} style={imageStyle} />
       
       <View style={textStyle}>
         <Text style={{ color: '#2e2f30' }}>{item.name}</Text>
@@ -63,9 +64,8 @@ class Item extends Component {
   render() {
     return (
       <FlatList
-        data={data}
+        data={this.props.cart}
         renderItem={this._renderItem}
-        keyExtractor={(item) => item.id}
       />
     );
   }
@@ -106,4 +106,8 @@ const styles = {
   }
 };
 
-export default Item;
+export default connect(
+  (store) => {
+    return store;
+  }
+)(Item);

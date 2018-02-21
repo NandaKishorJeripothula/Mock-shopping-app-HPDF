@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, Image, ScrollView, TextInput, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import {H1, H2, Text, Item,Label,Input, Button}  from 'native-base';
  
-export default class Productpage extends React.Component{
+class Productpage extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -27,6 +28,15 @@ export default class Productpage extends React.Component{
         });
     }
 
+    addToCart = () => {
+        let newEntry = [{
+            name:this.state.name, 
+            price:this.state.price, 
+            image:this.state.image
+        }];
+        this.props.update('ADDTOCART',{cart:this.props.cart.concat(newEntry)});
+    }
+
     render() {
         return(
             <ScrollView contentContainerStyle={styles.main}>
@@ -36,11 +46,8 @@ export default class Productpage extends React.Component{
                 <H2 style={{color:'rgba(0,0,0,0.7)'}}>{this.state.price}₹</H2>
                 
                 <View style={styles.view}>
-                    <Button style={{backgroundColor:'#1A237E'}} onPress={() => {}}>
+                    <Button style={{backgroundColor:'#1A237E'}} onPress={() => this.addToCart()}>
                             <Text>Add to cart</Text>
-                    </Button>
-                    <Button style={{backgroundColor:'#1A237E'}} onPress={() => {}}>
-                            <Text>Buy Now</Text>
                     </Button>
                 </View>
 
@@ -99,3 +106,16 @@ export default class Productpage extends React.Component{
   },
 
 });
+
+export default connect(
+    (store) => {
+      return store;
+    },
+    (dispatch) => {
+      return {
+        update:(dispatchType, dispatchPayload) => {
+          dispatch({type: dispatchType, payload: dispatchPayload});
+        }
+      }
+    }
+  )(Productpage);
