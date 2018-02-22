@@ -10,6 +10,9 @@ const reducer=(state,action) => {
     else if(action.type=='ADDTOCART'){
         return Object.assign({},state,{cart:action.payload.cart});
     }
+    else if(action.type=='REMOVEFROMCART'){
+        return Object.assign({},state,{cart:action.payload.newarr});
+    }
     else return state;
 }
 

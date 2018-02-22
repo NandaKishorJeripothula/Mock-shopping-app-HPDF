@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, ScrollView, TextInput, StyleSheet } from 'react-native';
+import {View, Image, ScrollView, TextInput, StyleSheet, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import {H1, H2, Text, Item,Label,Input, Button}  from 'native-base';
  
@@ -35,6 +35,7 @@ class Productpage extends React.Component{
             image:this.state.image
         }];
         this.props.update('ADDTOCART',{cart:this.props.cart.concat(newEntry)});
+        ToastAndroid.show("Added to cart!",ToastAndroid.SHORT);
     }
 
     render() {

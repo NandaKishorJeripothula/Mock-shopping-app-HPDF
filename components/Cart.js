@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {StatusBar, Platform, View, StyleSheet, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
+import {StatusBar, Platform, View, StyleSheet, TouchableOpacity, TouchableNativeFeedback, ToastAndroid} from 'react-native';
 import {Text, Icon} from 'native-base';
 import Item from './Item';
 
@@ -14,11 +14,26 @@ class Cart extends Component {
   total=0;
   componentDidMount(){
     for(let i=0; i<this.props.cart.length; i++){
-      this.total+=parseInt(this.props.cart[0].price);
+      this.total+=parseInt(this.props.cart[i].price);
     }
     this.setState({
       total:this.total
     });
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.props!=nextProps){
+      for(let i=0; i<this.props.cart.length; i++){
+        this.total+=parseInt(this.props.cart[i].price);
+      }
+      this.setState({
+        total:this.total
+      });
+    }
+  }
+
+  pay = () => {
+    ToastAndroid.show("You've reached the end of the app!", ToastAndroid.SHORT);
   }
 
   render() {
@@ -42,7 +57,7 @@ class Cart extends Component {
         </View>
 
           <View style={styles.buttonContainerStyle}>
-            <TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={() => this.pay()}>
               <View style={styles.checkoutButtonStyle}>
                 <Text style={{ color: '#fff' }}>Proceed to Pay</Text>
               </View>
