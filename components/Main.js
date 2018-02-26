@@ -170,5 +170,12 @@ const styles = StyleSheet.create({
 export default connect(
     (store) => {
         return store;
+    },
+    (dispatch) => {
+      return {
+        update:(dispatchType, dispatchPayload) => {
+          dispatch({type: dispatchType, payload: dispatchPayload});
+        }
+      }
     }
 )(Main);

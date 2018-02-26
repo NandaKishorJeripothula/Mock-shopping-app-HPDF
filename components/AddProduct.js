@@ -20,22 +20,16 @@ class AddProduct extends React.Component {
     }
 
     submitProduct(){
+        let data = new FormData();
+        data.append('picture',{uri:this.state.imageuri, name:'placeholder.jpg', type:'image/jpg'});
         fetch('https://app.banner20.hasura-app.io/add_product',
         {
             method:'post',
             headers: {
                 "Accept": "application/json, text/plain, */*",
-                "Content-Type": "application/json"
+                "Content-Type": "multipart/form-data"
             },
-            body:JSON.stringify({
-                "data":{
-                    "product_name":this.state.product_name,
-                    "price":this.state.price,
-                    "description":this.state.description,
-                    "category":this.state.category,
-                    "filename":this.state.imageuri 
-                }               
-            })
+            body:data
         }).then((res) => {
             console.log(res);
             return res.text();
