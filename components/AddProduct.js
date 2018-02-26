@@ -29,7 +29,15 @@ class AddProduct extends React.Component {
                 "Accept": "application/json, text/plain, */*",
                 "Content-Type": "multipart/form-data"
             },
-            body:data
+            body:JSON.stringify({
+                "data":{
+                    "product_name":this.state.product_name,
+                    "price":this.state.price,
+                    "description":this.state.description,
+                    "category":this.state.category,
+                    "file":data
+                }               
+            })
         }).then((res) => {
             console.log(res);
             return res.text();
