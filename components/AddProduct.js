@@ -20,29 +20,51 @@ class AddProduct extends React.Component {
     }
 
     submitProduct(){
-        let data = new FormData();
-        data.append('picture',{uri:this.state.imageuri, name:'placeholder.jpg', type:'image/jpg'});
-        fetch('https://app.banner20.hasura-app.io/add_product',
-        {
-            method:'post',
-            headers: {
-                "Accept": "application/json, text/plain, */*",
-                "Content-Type": "multipart/form-data"
-            },
-            body:JSON.stringify({
-                "data":{
-                    "product_name":this.state.product_name,
-                    "price":this.state.price,
-                    "description":this.state.description,
-                    "category":this.state.category,
-                    "file":data
-                }               
-            })
-        }).then((res) => {
+        // let data = new FormData();
+        // data.append('picture',{uri:this.state.imageuri, name:'placeholder.jpg', type:'image/jpg'});
+        // fetch('https://app.banner20.hasura-app.io/add_product',
+        // {
+        //     method:'post',
+        //     headers: {
+        //         "Accept": "application/json, text/plain, */*",
+        //         "Content-Type": "multipart/form-data"
+        //     },
+        //     body:JSON.stringify({
+        //         "data":{
+        //             "product_name":this.state.product_name,
+        //             "price":this.state.price,
+        //             "description":this.state.description,
+        //             "category":this.state.category,
+        //             "file":data
+        //         }               
+        //     })
+        // }).then((res) => {
+        //     console.log(res);
+        //     return res.text();
+        // }).then((data) => {
+        //     console.log(data);
+        // });
+        let uriParts = this.state.imageuri.split('.');
+        let fileType = uriParts[uriParts.length - 1];
+      
+        let formData = new FormData();
+        formData.append('photo', {
+          uri:this.state.imageuri,
+          name: "photo."+fileType,
+          type: "image/"+fileType,
+        });
+      
+        let options = {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+      
+        fetch('https://app.banner20.hasura-app.io/add_product', options).then((res) => {
             console.log(res);
-            return res.text();
-        }).then((data) => {
-            console.log(data);
         });
     }
 
@@ -73,6 +95,7 @@ class AddProduct extends React.Component {
                             <Right/>
                         </TouchableOpacity>
                     </ListItem>
+                    <Input type='file' name='filename'/>
                     <ListItem style={{borderBottomColor:'rgba(0,0,0,0.0)'}}>
                         <Item regular>
                             <Input placeholder='Enter Product Name' onChangeText={(value)=>this.setState({product_name:value})} value={this.state.product_name}/>
